@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Mis cosas -->
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <link rel="icon" type="image/png" href="Images/Logo1.png">
+        <link rel="stylesheet" type="text/css" href="CSS/loadingCSS.css">
+        <link rel="stylesheet" type="text/css" href="CSS/NotaNueva.css">
+        <link rel="stylesheet" type="text/css" href="CSS/AgrandarNota.css">
+
+        <script type="text/javascript">
+            function irDetallesCuenta() {
+                window.location.href = "DetallesCuentaUsuario.html";
+            }
+            function refresh() {
+              location.reload(true);
+              inicio=true;
+            }    
+        </script>
+
+        <!-- JQuery -->
+        <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+        <title>Noted!</title>
+
+        <!-- File Pond -->
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+        <!-- Previer -->
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+        <link
+            href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+            rel="stylesheet"
+            />
+        <!-- Edit -->
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+        <link
+            href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css"
+            rel="stylesheet"
+            />
+
+    </head>
+    <body>
+        <form id="formBus" name="formBus" method="POST" >
+        <nav class="navbar navbar-dark bg-dark fixed-top flex-md-nowrap p-0 shadow" style="background-color: black">
+            <a class="navbar-brand "  onclick="refresh()" style="font-family: serif; margin-left: 15px;">Noted!</a>
+            <!--input type="hidden" name="accion" id="accionBusqueda" value="buscarTituloC"-->
+            <input type="text" id="busqueda" name="busqueda" class="form-control form-control-primary w-100" placeholder="Busqueda" style="margin-right: 10px; max-width: 70%;">
+             </form>
+            <br>
+            <img id="lupa" src="Images/Lupa.png" alt="Busqueda" width="35" height="35" style="margin-right: 20px">
+            <br>
+            <img id="imgUs" src="Images/User.png" alt="Imagen Usuario" width="50" height="50" style="border-radius: 50%; margin: 5px">
+            <div class="dropdown">
+                <button class="dropbtn">▼</button>
+                <div class="dropdown-content">
+                    <p>Perfil</p>  
+                    <p onclick="irDetallesCuenta()">Cuenta</p>      
+                </div>
+            </div>
+            <div class="nav-link" style="color: #E6E4D3" id="nombreusBar"></div>
+            <div id="idUserHidden" hidden></div>
+            <!--% int a=request.getSession().getAttribute("usuario"); %-->
+            <ul class="navbar-nav px-5">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="#" onclick="cerrarSesion()">Salir</a>
+                </li>
+            </ul>
+        </nav>
+       </form>
+
+        <br><br>
+        <!-- comment 
+         <center>
+             <div align="left" class="grid" style="max-width: 60%" ></div>
+         </center>
+        -->
+
+        <div id="ContenidoCentral">
+
+            <div id="BarraLateral" style="background-color: rgba(0, 128, 255, 0.50);">
+                <form id="formFilFecha" name="formFechas" method="POST" >
+                <div id="ContenidosBarraLateral">
+                    <br/>
+                    <hr class="solid"> 
+                    <p>Trending: </p>
+                    <br />
+                    <hr class="solid"> 
+                    <p>Etiquetas: </p>
+                    <a>A</a> <a>B</a> <a>C</a> <a>D</a> <a>E</a> <a>F</a> <a>G</a> <a>H</a> 
+                    <a>I</a> <a>J</a> <a>K</a> <a>L</a> <br> <a>M</a> <a>N</a> <a>O</a> <a>P</a>
+                    <a>Q</a> <a>R</a> <a>S</a> <a>T</a> <a>U</a> <a>V</a> <a>W</a> <a>X</a> 
+                    <a>Y</a> <a>Z</a> <a>#</a>
+                    <br>
+                    <hr class="solid"> 
+                    <p>Fechas: </p>
+                    <p>Despues de: </p>
+                    <input type="date" name="despuesDe" id="fechaDesp">
+                    <br><br>
+                    <p>Antes de: </p>
+                    <input type="date" name="antesDe" id="fechaAnt">
+                    <br><br>
+                    <button id="filtroFecha" onclick="valFechaNotes()">Filtrar</button>
+                    <br/><br/><br/><br/><br/><br/><br/><br/>
+                 </form>
+                </div>
+
+            </div>  
+
+            <div id="contenedor__todo">
+
+                <div class="grid"></div>        
+
+                <template id="card-template">
+                    
+                    <div class="card" id="notaId"  >
+                        <div class="dropdown" style="justify-content: flex-end; margin-left: 90%;">
+                            <button class="dropbtn" style="color: black; font-size: 20px; ">…</button>
+                            <div id="myID" data-id ></div>
+                            <div class="dropdown-content">
+                                
+                                <p id="editarNota" onclick="editarNota()">Editar</p> 
+                                <p id="eliminarNota" onclick="DeleteNotes()">Eliminar</p>     
+                            </div>
+                        </div>
+                        <div >
+                            <div class="headerLoad">
+                                <img class="header-img skeleton" data-image src="https://source.unsplash.com/100x100/?nature" />
+
+                                <div class="title" data-title>
+                                    <div class="skeleton skeleton-text"></div>
+                                    <div class="skeleton skeleton-text"></div>
+                                </div>
+                            </div>
+                            <div data-body>
+                                <div class="skeleton skeleton-text"></div>
+                                <div class="skeleton skeleton-text"></div>
+                                <div class="skeleton skeleton-text"></div>
+                                <div class="skeleton skeleton-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                                           
+                </template>
+
+                <div class="paginate" id="paginacion">
+                </div>
+
+                <div class="pagFecha" id="paginacionFecha">
+                   
+                </div>
+
+                <div class="pagTit" id="paginacionTitulo"> 
+                    
+                </div>
+
+                <div class="pagEti" id="paginacionEtiqueta">
+                   
+                </div>
+
+                <img id="pencil" src="Images/Pencil.png" alt="Crear Post" width="50" height="50">
+                
+                <div class="contenedor__nota">
+                    <form class="nota" id="formNotaID" name="formNota" method="POST" enctype="multipart/form-data">
+                        <input name="idNota" id="idnota" value=0 type="hidden"/>
+                        <input id="accionNota" name="accion" value="registrar" type="hidden"/>
+                        <input type="text" id="titulo" name="tituloNotaN" placeholder="Titulo" required>
+                        <br> <hr class="solid">                
+                        <input type="text" id="hashtags" name="hashNotaN" placeholder="Hashtags">
+                        <br>
+                        <textarea  name="descNotaN" id="descripcion" placeholder="Texto de blog" required></textarea>
+                        <input type="file" name="file" id="fotoNota" accept="image/png, image/jpeg, image/gif" aria-label="Seleccione nueva imagen de perfil">
+                        <br> <br>
+                        <button id="Publicar" onclick="ValNotes()">Publicar</button>
+                        <button id="Cancelar" onclick="cerrarNota()">Cancelar</button>
+                    </form>
+                </div>
+                
+                 <div class="notaGrande">
+                     <div  id="idnotaG" value=0 hidden></div>
+                    <h1 id="TituloNotaGrande"> Titulo </h1>
+                    <hr class="solid"> 
+                    <div id="EtiquetasNotaGrande"> #Hastags </div>
+                    <br>
+                    <div id="Junta">
+                        <div id="CuerpoNotaGrande"> Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota 
+                            Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota Cuerpo Nota </div>
+                        <img id="imgNotaG" src="Images/placeholder-img.png" width="300" height="250" alt="Imagen Nota">
+                    </div>                    
+                    <br> <br>
+                    <button id="Cerrar" onclick="cerrarNotaGrande()">Cerrar</button>
+                </div>
+                
+                <br> <br> <br>
+                
+                <div class="footer">                    
+                    <p>Integrantes: Valeria Abigail Carillo Saldaña - 1877432 & Miguel Angel Aguilar Gzz - 1795657</p>
+                    <!-- 
+                    <br><br>
+                    <p> Valeria Abigail Carillo Saldaña - 1877432 </p>
+                    <br><br>
+                    <p> Miguel Angel Aguilar Gzz - 1795657 </p> -->
+                </div>
+            </div>
+            
+        </div>
+        
+    </body>
+    <!-- Plugins de la imagen    
+    <!-- Previer 
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script>
+                    // Register the plugin
+                    // FilePond.registerPlugin(FilePondPluginImagePreview);
+                    // ... FilePond initialisation code here
+    </script>
+    <!-- resize 
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script>
+                    // Register the plugin
+                    //FilePond.registerPlugin(FilePondPluginImagePreview);
+                    //FilePond.registerPlugin(FilePondPluginImageResize);
+                    // ... FilePond initialisation code here
+    </script>
+    <!-- Edit 
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+    <script>
+                    // Register the plugin
+                    FilePond.registerPlugin(FilePondPluginImagePreview);
+                    FilePond.registerPlugin(FilePondPluginImageResize);
+                    FilePond.registerPlugin(FilePondPluginImageEdit);  //Pendiente funcionamiento de Edit
+                    // ... FilePond initialisation code here
+    </script>
+
+
+    <script>
+        const inputElement = document.querySelector('input[type="file"]');
+        const pond = FilePond.create(inputElement, {imageCropAspectRatio: '1:1', imagePreviewHeight: 150, allowImageResize: true, imageResizeTargetWidth: null,
+            imageResizeTargetHeight: null, imageResizeMode: 'cover'});
+    </script>
+    -->
+
+    <!-- Grid de notas 
+    <script>
+        
+        const fd=new FormData();
+        fd.append('accion','listar');
+        const options = {
+            method: 'POST',
+            body:fd
+        };
+        const grid = document.querySelector('.grid');
+        const cardTemplate = document.getElementById('card-template');
+        for (let i = 0; i < 10; i++) {
+            grid.append(cardTemplate.content.cloneNode(true));
+        }
+        fetch("Notas",options)
+                .then(res => res.json())
+                .then(respuesta => {
+                    grid.innerHTML = '';
+                   
+                    respuesta.notas.forEach(nota => {
+                        const div = cardTemplate.content.cloneNode(true);
+                        div.querySelector('[data-id]').textContent=nota.idNota;
+                        div.querySelector('[data-title]').textContent = nota.tituloNota;
+                        div.querySelector('[data-body]').textContent = nota.descNota;
+                        if(nota.fotoString!==0&& nota.fotoString!=="-1"){
+                            div.querySelector('[data-image]').src=nota.fotoString;
+                        }else{//cuando no hay imagen pone la default de internet
+                            div.querySelector('[data-image]').src="https://source.unsplash.com/100x100/?nature";
+                        }
+                        grid.append(div);
+                    });
+                }).catch(console.error);
+    </script-->
+    
+    <script src="JS/Inicio.js"></script>
+    <script src="JS/crearNotaNueva.js"></script>
+    <script src="JS/NotasVal.js"></script>
+    <script src="JS/agrandarNota.js"></script>
+</html>
